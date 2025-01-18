@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+.user-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+select, input, button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:focus {
+    outline: none;
+}
+
+.meal-selection button {
+    margin-right: 10px;
+}
+
+#meal-plan {
+    margin-top: 20px;
+    display: none;
+}

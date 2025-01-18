@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Meal Planner</h1>
+        
+        <div class="user-selection">
+            <label for="gender">Select Gender:</label>
+            <select id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            
+            <label for="diet">Dietary Preferences:</label>
+            <select id="diet">
+                <option value="none">None</option>
+                <option value="gluten-free">Gluten Free</option>
+                <option value="dairy-free">Dairy Free</option>
+                <option value="vegan">Vegan</option>
+                <option value="vegetarian">Vegetarian</option>
+            </select>
+
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" min="50" max="200">
+
+            <div class="meal-selection">
+                <button class="meal-btn" id="breakfast">Breakfast</button>
+                <button class="meal-btn" id="lunch">Lunch</button>
+                <button class="meal-btn" id="dinner">Dinner</button>
+            </div>
+            
+            <button id="show-meal-plan">Show Meal Plan</button>
+        </div>
+        
+        <div id="meal-plan"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

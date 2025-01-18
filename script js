@@ -1,0 +1,40 @@
+document.getElementById("show-meal-plan").addEventListener("click", function() {
+    const gender = document.getElementById("gender").value;
+    const diet = document.getElementById("diet").value;
+    const weight = document.getElementById("weight").value;
+    const selectedMeals = [];
+
+    if (document.getElementById("breakfast").classList.contains("selected")) {
+        selectedMeals.push("Breakfast");
+    }
+    if (document.getElementById("lunch").classList.contains("selected")) {
+        selectedMeals.push("Lunch");
+    }
+    if (document.getElementById("dinner").classList.contains("selected")) {
+        selectedMeals.push("Dinner");
+    }
+
+    // Example meal plan data
+    const meals = {
+        "Breakfast": ["Oatmeal", "Smoothie", "Pancakes", "Eggs", "Toast"],
+        "Lunch": ["Grilled Chicken", "Salad", "Pasta", "Sandwich", "Rice & Beans"],
+        "Dinner": ["Steak", "Vegan Curry", "Soup", "Vegetable Stir-fry", "Fish"]
+    };
+
+    let mealPlan = '<h2>Selected Meal Plan</h2><table><tr><th>Meal Type</th><th>Meals</th></tr>';
+    selectedMeals.forEach(mealType => {
+        mealPlan += `<tr><td>${mealType}</td><td>${meals[mealType].join(", ")}</td></tr>`;
+    });
+    mealPlan += '</table>';
+
+    document.getElementById("meal-plan").innerHTML = mealPlan;
+    document.getElementById("meal-plan").style.display = "block";
+});
+
+// Toggle meal selection
+document.querySelectorAll(".meal-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        button.classList.toggle("selected");
+        button.style.backgroundColor = button.classList.contains("selected") ? "#45a049" : "#4CAF50";
+    });
+});

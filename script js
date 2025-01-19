@@ -1,51 +1,53 @@
-document.getElementById("show-meal-plan").addEventListener("click", function() {
-    const gender = document.getElementById("gender").value;
-    const diet = document.getElementById("diet").value;
-    const weight = document.getElementById("weight").value;
-    const selectedMeals = [];
+// Fetch products from Open Food Facts based on user input
+document.getElementById('diet-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    // Check if each meal button is selected
-    if (document.getElementById("breakfast").classList.contains("selected")) {
-        selectedMeals.push("Breakfast");
-    }
-    if (document.getElementById("lunch").classList.contains("selected")) {
-        selectedMeals.push("Lunch");
-    }
-    if (document.getElementById("dinner").classList.contains("selected")) {
-        selectedMeals.push("Dinner");
-    }
+    const diet = document.getElementById('diet').value;
+    const maxCalories = document.getElementById('maxCalories').value;
+    const minProteins = document.getElementById('maxProteins').value;
+    const searchTerm = document.getElementById('search').value;
 
-    // Check if any meal is selected
-    if (selectedMeals.length === 0) {
-        alert("Please select at least one meal type.");
-        return;
-    }
-
-    // Example meal plan data (for demonstration purposes)
-    const meals = {
-        "Breakfast": ["Oatmeal", "Smoothie", "Pancakes", "Eggs", "Toast", "Yogurt", "Cereal", "Fruit Salad", "Granola", "Muffins"],
-        "Lunch": ["Grilled Chicken", "Salad", "Pasta", "Sandwich", "Rice & Beans", "Veggie Wrap", "Soup", "Tacos", "Burrito", "Quinoa Salad"],
-        "Dinner": ["Steak", "Vegan Curry", "Soup", "Vegetable Stir-fry", "Fish", "Chicken Stir-fry", "Spaghetti", "Salmon", "Pizza", "Risotto"]
-    };
-
-    // Generate meal plan as a table
-    let mealPlan = '<h2>Selected Meal Plan</h2><table><tr><th>Meal Type</th><th>Meals</th></tr>';
+    // Construct the API URL with parameters based on user input
+    let apiUrl = `https://world.openfoodfacts.org/api/v2/search?categories=${searchTerm}&labels=${diet}&fields=product_name,nutriments,ingredients_text,labels`;
     
-    selectedMeals.forEach(mealType => {
-        mealPlan += `<tr><td>${mealType}</td><td>${meals[mealType].join(", ")}</td></tr>`;
-    });
+    if (maxCalories) {
+        apiUrl += `&nutriments.calories.lt=${maxCalories}`;
+    }
+    if (minProteins) {
+        apiUrl += `&nutriments.proteins.gt=${minProteins}`;
+    }
 
-    mealPlan += '</table>';
+    // Fetch data from Open Food Facts API
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = ''; // Clear previous results
 
-    // Insert meal plan into the page
-    document.getElementById("meal-plan").innerHTML = mealPlan;
-    document.getElementById("meal-plan").style.display = "block";  // Ensure it's visible
-});
+            // Display search results
+            data.products.forEach(product => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
 
-// Toggle meal selection when buttons are clicked
-document.querySelectorAll(".meal-btn").forEach(button => {
-    button.addEventListener("click", () => {
-        button.classList.toggle("selected");
-        button.style.backgroundColor = button.classList.contains("selected") ? "#45a049" : "#4CAF50";
-    });
+                const productName = product.product_name || 'No name available';
+                const calories = product.nutriments ? product.nutriments.calories : 'N/A';
+                const proteins = product.nutriments ? product.nutriments.proteins : 'N/A';
+                const ingredients = product.ingredients_text || 'No ingredients available';
+                const labels = product.labels ? product.labels.join(', ') : 'No labels available';
+
+                resultItem.innerHTML = `
+                    <h3>${productName}</h3>
+                    <p><strong>Calories:</strong> ${calories}</p>
+                    <p><strong>Proteins:</strong> ${proteins} g</p>
+                    <p><strong>Ingredients:</strong> ${ingredients}</p>
+                    <p><strong>Labels:</strong> ${labels}</p>
+                `;
+
+                resultsContainer.appendChild(resultItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            document.getElementById('results').innerHTML = 'Error fetching data. Please try again later.';
+        });
 });

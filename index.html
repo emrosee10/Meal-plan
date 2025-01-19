@@ -3,42 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meal Planner</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Diet Planner Tool</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Meal Planner</h1>
+        <header>
+            <h1>Diet Planner Tool</h1>
+            <p>Find products that match your dietary preferences and nutritional goals!</p>
+        </header>
         
-        <div class="user-selection">
-            <label for="gender">Select Gender:</label>
-            <select id="gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select>
-            
-            <label for="diet">Dietary Preferences:</label>
-            <select id="diet">
-                <option value="none">None</option>
-                <option value="gluten-free">Gluten Free</option>
-                <option value="dairy-free">Dairy Free</option>
-                <option value="vegan">Vegan</option>
-                <option value="vegetarian">Vegetarian</option>
-            </select>
+        <div class="form-container">
+            <form id="diet-form">
+                <label for="diet">Choose your dietary preference:</label>
+                <select id="diet" name="diet">
+                    <option value="vegan">Vegan</option>
+                    <option value="gluten-free">Gluten-Free</option>
+                    <option value="vegetarian">Vegetarian</option>
+                </select>
 
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" min="50" max="200">
+                <label for="maxCalories">Max Calories:</label>
+                <input type="number" id="maxCalories" name="maxCalories" placeholder="e.g., 200" min="0">
 
-            <div class="meal-selection">
-                <button class="meal-btn" id="breakfast">Breakfast</button>
-                <button class="meal-btn" id="lunch">Lunch</button>
-                <button class="meal-btn" id="dinner">Dinner</button>
-            </div>
-            
-            <button id="show-meal-plan">Show Meal Plan</button>
+                <label for="maxProteins">Min Proteins (grams):</label>
+                <input type="number" id="maxProteins" name="maxProteins" placeholder="e.g., 5" min="0">
+
+                <label for="search">Search for a product:</label>
+                <input type="text" id="search" name="search" placeholder="e.g., pasta">
+
+                <button type="submit">Search</button>
+            </form>
         </div>
-        
-        <div id="meal-plan"></div>
+
+        <div id="results" class="results">
+            <!-- Search results will appear here -->
+        </div>
     </div>
 
     <script src="script.js"></script>
